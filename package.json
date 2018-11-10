@@ -1,0 +1,29 @@
+{
+  "name": "douyu-helper",
+  "version": "1.0.0",
+  "description": "helper for douyu chat",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build": "cd client && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WNJStudio/DouyuHelper.git"
+  },
+  "keywords": [
+    "douyu",
+    "chat",
+    "danmu"
+  ],
+  "author": "wnjstudio",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WNJStudio/DouyuHelper/issues"
+  },
+  "homepage": "https://github.com/WNJStudio/DouyuHelper#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "socket.io": "^2.1.1"
+  }
+}
