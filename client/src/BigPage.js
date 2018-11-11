@@ -49,7 +49,13 @@ export default class extends Component {
     render() {
         return (
             <React.Fragment>
-                <AppBar roomid={this.props.roomid} />
+                <AppBar
+                    roomid={this.props.roomid}
+                    adminhandler={e => {
+                        e.preventDefault()
+                        this.socket.emit("requestadmin")
+                    }}
+                />
             </React.Fragment>
         )
     }

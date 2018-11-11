@@ -17,7 +17,7 @@ export default class extends Component {
                             className="AppBarTitle">
                             {this.props.roomid}
                         </Typography>
-                        <AdminButton />
+                        <AdminButton adminhandler={this.props.adminhandler} />
                     </Toolbar>
                 </AppBar>
             </div>

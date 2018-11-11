@@ -66,8 +66,8 @@ io.on("connection", client => {
 
     client.emit("roomid", roomID)
 
-    client.on("login", ts => {
-        console.log(new Date(ts).toLocaleString())
+    client.on("requestadmin", () => {
+        console.log("requested admin page")
     })
 })
 
