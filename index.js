@@ -66,9 +66,16 @@ io.on("connection", client => {
 
     client.emit("roomid", roomID)
 
-    client.on("requestadmin", () => {
-        console.log("requested admin page")
+    client.on("requestadmin", () => client.emit("admin", true))
+
+    client.on("login", credentials => {
+        client.emit(
+            "login",
+            adminCredentials[credentials.username] === credentials.password
+        )
     })
+
+    client.on("logout", () => client.emit("admin", false))
 })
 
 server.listen(process.env.PORT, process.env.IP || "0.0.0.0", () =>

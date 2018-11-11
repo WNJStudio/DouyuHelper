@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
-import AdminButton from "./AdminButton"
+import AppBarButton from "./AppBarButton"
 import "./AppBar.css"
 
 export default class extends Component {
@@ -17,7 +17,10 @@ export default class extends Component {
                             className="AppBarTitle">
                             {this.props.roomid}
                         </Typography>
-                        <AdminButton adminhandler={this.props.adminhandler} />
+                        <AppBarButton
+                            handler={this.props.handler}
+                            text={this.props.admin ? "登出" : "登陆"}
+                        />
                     </Toolbar>
                 </AppBar>
             </div>
