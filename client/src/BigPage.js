@@ -1,61 +1,56 @@
-import React, { Component } from 'react'
-import AppBar from './components/AppBar'
+import React, { Component } from "react"
+import AppBar from "./components/AppBar"
 
 export default class extends Component {
+  state = {
+    newuenter: false,
+    newchatmsg: false,
+    newgift: false,
+    noblesupdated: false,
+  }
 
-    state = {
-        newuenter: false,
-        newchatmsg: false,
-        newgift: false,
-        noblesupdated: false
-    }
+  constructor(props) {
+    super(props)
+    this.socket = this.props.socket
+    this.msgs = []
+    this.entered = []
 
-    constructor(props) {
-        super(props)
-        this.socket = this.props.socket
-        this.msgs = new Array()
-        this.entered = new Array()
+    this.getMessages()
+  }
 
+  addMessage(msg) {
+    if (this.msgs.length > 10) this.msgs.shift()
+    this.msgs.push(msg)
+    this.setState(ps => (ps.newchatmsg = true))
+    setTimeout(() => this.setState(ps => (ps.newchatmsg = false)), 100)
+  }
 
-        this.getMessages()
-    }
+  userEnter(data) {
+    this.entered.push(data)
+    this.setState(ps => (ps.newuenter = true))
+    setTimeout(() => {
+      this.setState(ps => (ps.newuenter = false))
+      this.entered.shift()
+    }, 1000)
+  }
 
-    addMessage(msg) {
-        if (this.msgs.length > 10)
-            this.msgs.shift()
-        this.msgs.push(msg)
-        this.setState(ps => ps.newchatmsg = true)
-        setTimeout(() => this.setState(ps => ps.newchatmsg = false), 100)
-    }
+  getMessages() {
+    this.socket.on("data", data => {
+      if (data.type === "chatmsg") {
+        this.addMessage(data)
+      } else if (data.type === "uenter") {
+        this.userEnter(data)
+      } else {
+        console.log(data)
+      }
+    })
+  }
 
-    userEnter(data) {
-        this.entered.push(data)
-        this.setState(ps => ps.newuenter = true)
-        setTimeout(() => {
-            this.setState(ps => ps.newuenter = false)
-            this.entered.shift()
-        }, 1000)
-    }
-
-    getMessages() {
-        this.socket.on('data', data => {
-            if (data.type === 'chatmsg') {
-                this.addMessage(data)
-            }
-            else if (data.type === 'uenter') {
-                this.userEnter(data)
-            }
-            else {
-                console.log(data)
-            }
-        })
-    }
-
-    render() {
-        return (
-            <React.Fragment>
-                <AppBar roomid={this.props.roomid}/>
-            </React.Fragment>
-        )
-    }
+  render() {
+    return (
+      <React.Fragment>
+        <AppBar roomid={this.props.roomid} />
+      </React.Fragment>
+    )
+  }
 }
