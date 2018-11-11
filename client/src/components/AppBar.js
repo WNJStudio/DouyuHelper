@@ -6,18 +6,21 @@ import AdminButton from "./AdminButton"
 import "./AppBar.css"
 
 export default class extends Component {
-  render() {
-    return (
-      <div className="AppBarRoot">
-        <AppBar position="static">
-          <Toolbar>
-            <Typography variant="h6" color="inherit" className="AppBarTitle">
-              {this.props.roomid}
-            </Typography>
-            <AdminButton />
-          </Toolbar>
-        </AppBar>
-      </div>
-    )
-  }
+    render() {
+        return (
+            <div className="AppBarRoot">
+                <AppBar position="static">
+                    <Toolbar>
+                        <Typography
+                            variant="h6"
+                            color="inherit"
+                            className="AppBarTitle">
+                            {this.props.roomid}
+                        </Typography>
+                        <AdminButton />
+                    </Toolbar>
+                </AppBar>
+            </div>
+        )
+    }
 }

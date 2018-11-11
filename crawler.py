@@ -9,17 +9,17 @@ def sendmsg(msgstr,client):
     code = 689
     dlbytes = int.to_bytes(data_length,4,'little')
     header = dlbytes + dlbytes + int.to_bytes(code,4,'little')
-    
+
     client.send(header)
     sent = 0
     while sent < len(msg):
         tn = client.send(msg[sent:])
         sent += tn
-            
+
 def start(roomid,client):
     sendmsg('type@=loginreq/username@=wnjstudio/password@=douyu/roomid@={}/\0'.format(roomid),client)
     sendmsg('type@=joingroup/rid@={}/gid@=-9999/\0'.format(roomid),client)
-    
+
     print('---------------connected to 4340108---------------')
 
     while True:
@@ -51,7 +51,7 @@ if __name__ == '__main__':
     port = 8601
 
     client.connect((host,port))
-    
+
     pget = multiprocessing.Process(target=start,args=(sys.argv[1],client,))
     plive = multiprocessing.Process(target=keeplive,args=(client,))
     pget.start()
