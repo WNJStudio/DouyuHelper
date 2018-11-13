@@ -1,11 +1,13 @@
 import React, { Component } from "react"
+import { withStyles } from "@material-ui/core/styles"
 import Hidden from "@material-ui/core/Hidden"
+import CssBaseline from "@material-ui/core/CssBaseline"
 import io from "socket.io-client"
 import SmallPage from "./SmallPage"
 import BigPage from "./BigPage"
 import AdminPage from "./AdminPage"
 
-export default class extends Component {
+class App extends Component {
     state = {
         roomid: 0,
         admin: false,
@@ -27,20 +29,41 @@ export default class extends Component {
     }
 
     render() {
-        return this.state.admin ? (
-            <AdminPage roomid={this.state.roomid} socket={this.socket} />
-        ) : (
+        return (
             <React.Fragment>
-                <Hidden xsDown="xsDown">
-                    <BigPage roomid={this.state.roomid} socket={this.socket} />
-                </Hidden>
-                <Hidden xsUp="xsUp">
-                    <SmallPage
-                        roomid={this.state.roomid}
-                        socket={this.socket}
-                    />
-                </Hidden>
+                <CssBaseline />
+                <div className={this.props.classes.root}>
+                    {this.state.admin ? (
+                        <AdminPage
+                            roomid={this.state.roomid}
+                            socket={this.socket}
+                        />
+                    ) : (
+                        <React.Fragment>
+                            <Hidden xsDown>
+                                <BigPage
+                                    roomid={this.state.roomid}
+                                    socket={this.socket}
+                                />
+                            </Hidden>
+                            <Hidden xsUp>
+                                <SmallPage
+                                    roomid={this.state.roomid}
+                                    socket={this.socket}
+                                />
+                            </Hidden>
+                        </React.Fragment>
+                    )}
+                </div>
             </React.Fragment>
         )
     }
 }
+
+export default withStyles({
+    root: {
+        flexGrow: 1,
+        maxHeight: "100%",
+        overflow: "hidden",
+    },
+})(App)

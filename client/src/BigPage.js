@@ -1,5 +1,9 @@
 import React, { Component } from "react"
+import Grid from "@material-ui/core/Grid"
 import AppBar from "./components/AppBar"
+import VipList from "./components/VipList"
+import ChatList from "./components/ChatList"
+import GiftList from "./components/GiftList"
 
 export default class extends Component {
     state = {
@@ -57,6 +61,17 @@ export default class extends Component {
                         this.socket.emit("requestadmin")
                     }}
                 />
+                <Grid container spacing={8}>
+                    <Grid item sm={2}>
+                        <VipList vips={[1, 2, 3, 4, 5]} />
+                    </Grid>
+                    <Grid item sm={7}>
+                        <ChatList msgs={[1, 2, 3, 4, 5, 6]} />
+                    </Grid>
+                    <Grid item sm={3}>
+                        <GiftList gifts={[1, 2, 3, 4, 5, 6]} />
+                    </Grid>
+                </Grid>
             </React.Fragment>
         )
     }

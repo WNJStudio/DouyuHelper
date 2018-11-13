@@ -9,7 +9,7 @@ const io = require("socket.io").listen(server)
 
 const spawn = require("child_process").spawn
 
-const roomID = 4340108
+let roomID = 4340108
 
 let py
 let clientCount = 0
@@ -66,16 +66,20 @@ io.on("connection", client => {
 
     client.emit("roomid", roomID)
 
+    client.on("roomid", rid => (roomID = rid))
+
     client.on("requestadmin", () => client.emit("admin", true))
 
     client.on("login", credentials => {
-        client.emit(
-            "login",
+        client.admin =
             adminCredentials[credentials.username] === credentials.password
-        )
+        client.emit("login", client.admin)
     })
 
-    client.on("logout", () => client.emit("admin", false))
+    client.on("logout", () => {
+        client.admin = false
+        client.emit("admin", false)
+    })
 })
 
 server.listen(process.env.PORT, process.env.IP || "0.0.0.0", () =>
